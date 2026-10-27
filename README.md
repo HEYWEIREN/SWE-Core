@@ -267,6 +267,4 @@ python -m build
 
 本地环境以当前用户权限执行命令；Docker 的实际隔离范围取决于挂载与运行参数。轨迹会保存任务、配置和命令输出，分享前应检查其中的凭据或私有内容。
 
-## 参考与致谢
 
-项目的极简 Agent 设计参考了 [mini-swe-agent](https://github.com/SWE-agent/mini-swe-agent/blob/main/README.md)，尤其是以 Shell 为主要执行接口、保持线性消息历史和分离执行环境的思路。本 README 中的功能与使用方式以 SWE-Core 当前源码为准。
