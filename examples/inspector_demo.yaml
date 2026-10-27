@@ -1,0 +1,34 @@
+# 无 API 调用的浏览器演示，配合 -c core.yaml 使用。
+run:
+  task: "打印 hello-inspector，然后提交。"
+
+model:
+  model_class: deterministic_toolcall
+  outputs:
+    - role: assistant
+      content: "执行一条本地命令。"
+      reasoning_content: "使用固定响应演示轨迹浏览，不调用真实模型。"
+      tool_calls:
+        - id: call-demo
+          type: function
+          function:
+            name: bash
+            arguments: '{"command": "printf hello-inspector"}'
+      extra:
+        cost: 0.0
+        actions:
+          - command: "printf hello-inspector"
+            tool_call_id: call-demo
+    - role: assistant
+      content: "输出已检查，提交结果。"
+      tool_calls:
+        - id: call-submit
+          type: function
+          function:
+            name: bash
+            arguments: '{"command": "echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"}'
+      extra:
+        cost: 0.0
+        actions:
+          - command: "echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
+            tool_call_id: call-submit

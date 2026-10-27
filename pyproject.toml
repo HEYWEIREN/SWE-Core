@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+
+[project]
+name = "SWE-Core"
+version = "0.1.0"
+description = "A minimal software engineering agent project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0",
+    "jinja2",
+    "typer",
+    "rich",
+    "litellm>=1.75.5,!=1.82.7,!=1.82.8",
+    "tenacity",
+    "PyYAML>=6.0",
+    "platformdirs",
+    "prompt-toolkit",
+    "textual",
+    "datasets",
+]
+
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "pytest",
+    "pytest-asyncio",
+]
+
+
+[project.scripts]
+core = "swe_core.run.core:app"
+SWE-Core = "swe_core.run.core:app"
+core-extra = "swe_core.run.utilities.core_extra:main"
+core-e = "swe_core.run.utilities.core_extra:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["swe_core*"]
+
+
+[tool.setuptools.package-data]
+swe_core = [
+    "config/*.yaml",
+    "config/*.tcss",
+    "config/benchmarks/*.yaml",
+]
+
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "slow: headless terminal UI integration tests",
+    "live: calls a real model API and may incur cost",
+    "packaging: builds and installs the package in a clean environment",
+]
